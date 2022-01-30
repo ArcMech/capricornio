@@ -1,43 +1,45 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
-  private users: User[] = [
-    {
-      id: 1,
-      first_name: 'Shipwreck',
-      last_name: 'Brew',
-      role: 'Team',
-      email: 's@brew.com',
-    },
-  ];
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+  ) {}
   findAll() {
-    return this.users;
+    return this.userRepository.find();
   }
 
-  findOne(id: number) {
-    const user = this.users.find((user) => user.id === +id);
+  async findOne(id: number) {
+    const user = await this.userRepository.findOne(id);
     if (!user) {
       throw new NotFoundException(`User #${id} not found`);
     }
     return user;
   }
 
-  create(createUserDto: any) {
-    this.users.push(createUserDto);
+  create(createUserDto: CreateUserDto) {
+    const user = this.userRepository.create(createUserDto);
+    return this.userRepository.save(user);
   }
 
-  update(id: number, updateUserDto: any) {
-    const existingUser = this.findOne(id);
-    if (existingUser) {
-      // update the existing entity
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const user = await this.userRepository.preload({
+      id: +id,
+      ...updateUserDto,
+    });
+    if (!user) {
+      throw new NotFoundException(`User #${id} not found`);
     }
+    return this.userRepository.save(user);
   }
-  remove(id: number) {
-    const userIndex = this.users.findIndex((user) => user.id === +id);
-    if (userIndex >= 0) {
-      this.users.splice(userIndex, 1);
-    }
+  async remove(id: number) {
+    const user = await this.findOne(id);
+    return this.userRepository.remove(user);
   }
 }
