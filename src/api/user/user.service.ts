@@ -24,7 +24,10 @@ export class UserService {
   }
 
   create(createUserDto: CreateUserDto) {
-    const user = this.userRepository.create(createUserDto);
+    const user = this.userRepository.create({
+      ...createUserDto,
+      name: `${createUserDto.first_name} ${createUserDto.last_name}`,
+    });
     return this.userRepository.save(user);
   }
 
@@ -32,6 +35,7 @@ export class UserService {
     const user = await this.userRepository.preload({
       id: +id,
       ...updateUserDto,
+      name: `${updateUserDto.first_name} ${updateUserDto.last_name}`,
     });
     if (!user) {
       throw new NotFoundException(`User #${id} not found`);
