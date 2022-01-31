@@ -5,6 +5,8 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 
+import * as bcrypt from 'bcrypt';
+
 @Injectable()
 export class UserService {
   constructor(
@@ -23,12 +25,25 @@ export class UserService {
     return user;
   }
 
-  create(createUserDto: CreateUserDto) {
+  async findOneByEmail(email: string) {
+    const user = await this.userRepository.findOne(email);
+    if (!user) {
+      throw new NotFoundException(`User with this email doesn't exist`);
+    }
+    return user;
+  }
+
+  async create(createUserDto: CreateUserDto) {
+    const salt = await bcrypt.genSalt();
+    const password = await bcrypt.hash(createUserDto.password, salt);
+
     const user = this.userRepository.create({
       ...createUserDto,
+      password,
       name: `${createUserDto.first_name} ${createUserDto.last_name}`,
     });
-    return this.userRepository.save(user);
+    this.userRepository.save(user);
+    return 'User created successfully';
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
