@@ -1,9 +1,15 @@
-import {RegisterForm} from './components'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Home, Login } from './pages'
 
 function App() {
   return (
-    <RegisterForm />
-  );
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
-export default App;
+export default App
