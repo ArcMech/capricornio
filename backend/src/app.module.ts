@@ -1,9 +1,8 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UserModule } from './api/user/user.module';
-import { AuthModule } from './api/auth/auth.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { Module } from '@nestjs/common'
+import { AppService } from './app.service'
+import { UserModule } from './api/user/user.module'
+import { AuthModule } from './api/auth/auth.module'
+import { TypeOrmModule } from '@nestjs/typeorm'
 
 @Module({
   imports: [
@@ -20,7 +19,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       synchronize: true, // your entities will be synced with the database(recommended: disable in prod)
     }),
   ],
-  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

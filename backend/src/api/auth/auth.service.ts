@@ -23,14 +23,11 @@ export class AuthService {
     throw Error('Wrong password')
   }
 
-  async login(@Req() request: Pick<User, 'email' | 'password'>) {
-    // @ts-ignore
-    const user = await this.userService.findOneByEmail(request.body.email)
-    // @ts-ignore
-    const isAuthorized = bcrypt.compare(request.body.password, user.password)
+  async login(request: Pick<User, 'email' | 'password'>) {
+    const user = await this.userService.findOneByEmail(request.email)
+    const isAuthorized = bcrypt.compare(request.password, user.password)
 
     if (isAuthorized) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user
       const payload = { email: user.email, id: user.id }
       return { ...result, access_token: this.jwtService.sign(payload) }
