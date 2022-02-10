@@ -1,12 +1,23 @@
 import { Formik } from 'formik'
+import { api } from '../api'
 
 export const LoginForm = () => {
+  const onSubmit = async (values: { password: string; email: string }) => {
+    console.log('values', values)
+    try {
+      const response = await api({
+        url: 'http://localhost:3000/api/auth/',
+        method: 'POST',
+        data: values,
+      })
+      localStorage.setItem('token', response.data.access_token)
+    } catch (e: any) {
+      console.error(e)
+    }
+  }
   return (
     <div className="h-screen bg-gradient-to-br from-blue-600 to-indigo-600 flex justify-center items-center w-full">
-      <Formik
-        onSubmit={(values) => console.log(values)}
-        initialValues={{ email: '', password: '' }}
-      >
+      <Formik onSubmit={onSubmit} initialValues={{ email: '', password: '' }}>
         {({ handleSubmit, handleChange }) => (
           <form onSubmit={handleSubmit}>
             <div className="bg-white px-10 py-8 rounded-xl w-screen shadow-md max-w-sm">
