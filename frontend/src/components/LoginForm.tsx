@@ -1,9 +1,10 @@
 import { Formik } from 'formik'
+import { useNavigate } from 'react-router'
 import { api } from '../api'
 
 export const LoginForm = () => {
+  const navigate = useNavigate()
   const onSubmit = async (values: { password: string; email: string }) => {
-    console.log('values', values)
     try {
       const response = await api({
         url: 'http://localhost:3000/api/auth/',
@@ -11,6 +12,7 @@ export const LoginForm = () => {
         data: values,
       })
       localStorage.setItem('token', response.data.access_token)
+      navigate('/dashboard')
     } catch (e: any) {
       console.error(e)
     }
