@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common'
-import { AppService } from './app.service'
 import { UserModule } from './api/user/user.module'
 import { AuthModule } from './api/auth/auth.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
@@ -10,7 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
     AuthModule,
     TypeOrmModule.forRoot({
       type: 'postgres', // type of our database
-      host: 'localhost', // database host
+      host: 'database', // database host
       port: 5432, // database host
       username: 'postgres', // username
       password: 'pass123', // user password
@@ -19,6 +18,5 @@ import { TypeOrmModule } from '@nestjs/typeorm'
       synchronize: true, // your entities will be synced with the database(recommended: disable in prod)
     }),
   ],
-  providers: [AppService],
 })
 export class AppModule {}

@@ -1,9 +1,34 @@
 version: "3"
 services:
   db:
+    container_name: "database"
     image:  postgres
     restart: always 
     ports:
       - "5432:5432"
     environment:
        POSTGRES_PASSWORD: pass123
+
+  frontend:
+    env_file:
+      "./frontend/.env"
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    image: "capricornio-frontend"
+    ports:
+      - "3000:3000"
+    links:
+    - "backend"
+
+  backend:
+    env_file:
+      "./backend/.env"
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    image: "capricornio-backend"
+    ports:
+      - "8000:8000"
+    links:
+    - "db"

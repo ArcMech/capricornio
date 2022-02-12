@@ -7,7 +7,7 @@ export const LoginForm = () => {
   const onSubmit = async (values: { password: string; email: string }) => {
     try {
       const response = await api({
-        url: 'http://localhost:3000/api/auth/',
+        url: 'http://localhost:8000/api/auth/',
         method: 'POST',
         data: values,
       })
