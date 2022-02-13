@@ -5,6 +5,7 @@ import {
 } from '@reduxjs/toolkit'
 import { api } from 'src/api'
 import { User } from 'src/types'
+import { RootState } from '..'
 
 export const fetchUsersList = createAsyncThunk('users/listAll', async () => {
   const response = await api('users/')
@@ -21,7 +22,7 @@ const usersSlice = createSlice({
   name: 'users',
   initialState: usersAdapter.getInitialState({
     loading: false,
-    error: null,
+    error: '',
   }),
   reducers: {},
   extraReducers: (builder) => {
@@ -29,14 +30,26 @@ const usersSlice = createSlice({
       .addCase(fetchUsersList.fulfilled, (state, action) => {
         usersAdapter.addMany(state, action.payload)
         state.loading = false
-        state.error = null
+        state.error = ''
+      })
+      .addCase(fetchUsersList.pending, (state) => {
+        state.loading = true
+        state.error = ''
+      })
+      .addCase(fetchUsersList.rejected, (state) => {
+        state.loading = false
+        state.error = 'Error fetching users'
       })
       .addCase(addUser.fulfilled, (state, action) => {
         usersAdapter.addOne(state, action.payload)
         state.loading = false
-        state.error = null
+        state.error = ''
       })
   },
 })
+
+export const userSelectors = usersAdapter.getSelectors<RootState>(
+  (state) => state.users,
+)
 
 export default usersSlice.reducer
