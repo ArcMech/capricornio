@@ -1,7 +1,8 @@
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { SlideOver } from '..'
 
 const user = {
   name: 'Tom Cook',
@@ -22,6 +23,9 @@ function classNames(...classes: string[]) {
 }
 
 export const Navbar = () => {
+  const [visible, setVisible] = useState(false)
+
+  const openSider = () => setVisible(true)
   const navigate = useNavigate()
   const logout = () => {
     localStorage.clear()
@@ -37,6 +41,7 @@ export const Navbar = () => {
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
         <>
+          <SlideOver open={visible} setOpen={setVisible} />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center">
@@ -69,6 +74,13 @@ export const Navbar = () => {
               </div>
               <div className="hidden md:block">
                 <div className="ml-4 flex items-center md:ml-6">
+                  <button
+                    type="button"
+                    className="bg-pink-700 hover:bg-pink-500 text-white px-3 py-2 rounded-md text-sm font-medium mr-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                    onClick={openSider}
+                  >
+                    Add new account
+                  </button>
                   <button
                     type="button"
                     className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
