@@ -15,5 +15,5 @@ export class CreateUserDto {
   readonly password: string
 
   @IsString({ each: true })
-  readonly role: 'Admin' | 'Manager' | 'Team' | 'Customer'
+  readonly role: 'admin' | 'manager' | 'team' | 'customer'
 }
