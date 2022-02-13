@@ -17,29 +17,22 @@ export const addUser = createAsyncThunk('users/addOne', async (data: any) => {
 
 const usersAdapter = createEntityAdapter<User>({ selectId: (user) => user.id })
 
-type InitialState = {
-  loading: boolean
-  error: string | null
-  entities: User[]
-}
-
 const usersSlice = createSlice({
   name: 'users',
   initialState: usersAdapter.getInitialState({
-    entities: [],
     loading: false,
     error: null,
-  }) as InitialState,
+  }),
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchUsersList.fulfilled, (state, action) => {
-        state.entities = action.payload
+        usersAdapter.addMany(state, action.payload)
         state.loading = false
         state.error = null
       })
       .addCase(addUser.fulfilled, (state, action) => {
-        state.entities = [...state.entities, action.payload]
+        usersAdapter.addOne(state, action.payload)
         state.loading = false
         state.error = null
       })

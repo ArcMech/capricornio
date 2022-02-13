@@ -1,6 +1,7 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
+import { NewUserForm } from '../NewUserForm'
 
 type SlideOverProps = {
   open: boolean
@@ -61,18 +62,11 @@ export const SlideOver: React.FC<SlideOverProps> = ({ open, setOpen }) => {
                 <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
                   <div className="px-4 sm:px-6">
                     <Dialog.Title className="text-lg font-medium text-gray-900">
-                      Panel title
+                      Add New User
                     </Dialog.Title>
                   </div>
                   <div className="mt-6 relative flex-1 px-4 sm:px-6">
-                    {/* Replace with your content */}
-                    <div className="absolute inset-0 px-4 sm:px-6">
-                      <div
-                        className="h-full border-2 border-dashed border-gray-200"
-                        aria-hidden="true"
-                      />
-                    </div>
-                    {/* /End replace */}
+                    <NewUserForm />
                   </div>
                 </div>
               </div>
