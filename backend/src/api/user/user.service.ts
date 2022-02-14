@@ -51,8 +51,12 @@ export class UserService {
       password,
       name: `${createUserDto.first_name} ${createUserDto.last_name}`,
     })
+
     this.userRepository.save(user)
-    return 'User created successfully'
+    return {
+      ...createUserDto,
+      name: `${createUserDto.first_name} ${createUserDto.last_name}`,
+    }
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {

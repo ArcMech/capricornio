@@ -1,13 +1,17 @@
 version: "3"
 services:
   db:
+    env_file:
+      - "./.env"
     container_name: "database"
     image:  postgres
     restart: always 
     ports:
-      - "5432:5432"
+      - "${DATABASE_PORT}:${DATABASE_PORT}"
     environment:
-       POSTGRES_PASSWORD: pass123
+       POSTGRES_PASSWORD: ${DATABASE_PASS}
+    volumes:
+      - capricornio_db:/home/database/db
 
   frontend:
     env_file:
@@ -17,7 +21,7 @@ services:
       dockerfile: ./Dockerfile
     image: "capricornio-frontend"
     ports:
-      - "3000:3000"
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
     links:
     - "backend"
 
@@ -29,6 +33,9 @@ services:
       dockerfile: ./Dockerfile
     image: "capricornio-backend"
     ports:
-      - "8000:8000"
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
     links:
     - "db"
+volumes:
+  capricornio_db:
+    external: true
