@@ -19,7 +19,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  @Roles(Role.Admin)
+  // @Roles(Role.Admin)
   findAll() {
     return this.userService.findAll()
   }
@@ -31,7 +31,7 @@ export class UserController {
 
   @HttpCode(201)
   @Post()
-  @Roles(Role.Admin)
+  // @Roles(Role.Admin)
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto)
   }
@@ -42,7 +42,7 @@ export class UserController {
   }
 
   @Delete(':id')
-  @Roles(Role.Admin)
+  // @Roles(Role.Admin)
   remove(@Param('id') id: number) {
     return this.userService.remove(id)
   }

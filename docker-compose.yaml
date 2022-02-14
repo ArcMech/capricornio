@@ -9,7 +9,7 @@ services:
     ports:
       - "${DATABASE_PORT}:${DATABASE_PORT}"
     environment:
-       POSTGRES_PASSWORD: ${DATABASE_PASS}
+       POSTGRES_PASSWORD: "${DATABASE_PASS}"
     volumes:
       - capricornio_db:/home/database/db
 

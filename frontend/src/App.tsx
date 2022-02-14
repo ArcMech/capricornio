@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Home, Login, Dashboard } from './pages'
+import { Home, Login, Dashboard, Profile } from './pages'
 import { AuthRoute } from './routes'
 
 function App() {
@@ -13,6 +13,14 @@ function App() {
           element={
             <AuthRoute>
               <Dashboard />
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <AuthRoute>
+              <Profile />
             </AuthRoute>
           }
         />
