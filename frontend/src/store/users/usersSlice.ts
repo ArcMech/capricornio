@@ -7,6 +7,14 @@ import { api } from 'src/api'
 import { User } from 'src/types'
 import { RootState } from '..'
 
+export const login = createAsyncThunk(
+  'users/auth',
+  async (data: { email: string; password: string }) => {
+    const response = await api({ url: 'auth/', method: 'post', data })
+    return response.data
+  },
+)
+
 export const fetchUsersList = createAsyncThunk('users/listAll', async () => {
   const response = await api('users/')
   return response.data
@@ -18,11 +26,18 @@ export const addUser = createAsyncThunk('users/addOne', async (data: any) => {
 
 const usersAdapter = createEntityAdapter<User>({ selectId: (user) => user.id })
 
+type InitialState = {
+  loading: boolean
+  error: string | null
+  user: User | null
+}
+
 const usersSlice = createSlice({
   name: 'users',
-  initialState: usersAdapter.getInitialState({
+  initialState: usersAdapter.getInitialState<InitialState>({
     loading: false,
     error: '',
+    user: null,
   }),
   reducers: {},
   extraReducers: (builder) => {
@@ -44,6 +59,10 @@ const usersSlice = createSlice({
         usersAdapter.addOne(state, action.payload)
         state.loading = false
         state.error = ''
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.user = action.payload
+        localStorage.setItem('token', action.payload.access_token)
       })
   },
 })

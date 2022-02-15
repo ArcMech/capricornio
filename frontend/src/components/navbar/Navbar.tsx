@@ -1,5 +1,5 @@
 import { Fragment, useState } from 'react'
-import { useNavigate } from 'react-router'
+import { useNavigate, Link } from 'react-router-dom'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import { SlideOver } from '..'
@@ -33,9 +33,9 @@ export const Navbar = () => {
   }
 
   const userNavigation = [
-    { name: 'Your Profile', href: '/profile' },
-    { name: 'Settings', href: '#' },
-    { name: 'Sign out', href: '/login', onclick: logout },
+    { name: 'Your Profile', to: '/profile' },
+    { name: 'Settings', to: '#' },
+    { name: 'Sign out', to: '/login', onclick: logout },
   ]
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -112,15 +112,15 @@ export const Navbar = () => {
                         {userNavigation.map((item) => (
                           <Menu.Item key={item.name}>
                             {({ active }) => (
-                              <a
-                                href={item.href}
+                              <Link
+                                to={item.to}
                                 className={classNames(
                                   active ? 'bg-gray-100' : '',
                                   'block px-4 py-2 text-sm text-gray-700',
                                 )}
                               >
                                 {item.name}
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
                         ))}
@@ -191,7 +191,7 @@ export const Navbar = () => {
                   <Disclosure.Button
                     key={item.name}
                     as="a"
-                    href={item.href}
+                    href={item.to}
                     className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
                   >
                     {item.name}

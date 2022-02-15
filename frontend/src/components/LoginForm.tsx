@@ -1,19 +1,16 @@
 import { Formik } from 'formik'
 import { useNavigate, Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { FormItem } from './forms'
-import { api } from '../api'
-import login from 'src/images/login.jpg'
+import { login } from 'src/store/users/usersSlice'
+import loginImage from 'src/images/login.jpg'
 
 export const LoginForm = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const onSubmit = async (values: { password: string; email: string }) => {
     try {
-      const response = await api({
-        url: 'http://localhost:8000/api/auth/',
-        method: 'POST',
-        data: values,
-      })
-      localStorage.setItem('token', response.data.access_token)
+      dispatch(login(values))
       navigate('/dashboard')
     } catch (e: any) {
       console.error(e)
@@ -53,7 +50,7 @@ export const LoginForm = () => {
           </Formik>
           <div className="pt-12 pb-12 text-center">
             <p>
-              Don&#x27;t have an account?{' '}
+              {"Don't have an account? "}
               <Link to="/register" className="font-semibold underline">
                 Register here.
               </Link>
@@ -64,7 +61,7 @@ export const LoginForm = () => {
       <div className="w-1/2 shadow-2xl">
         <img
           className="hidden object-cover w-full h-screen md:block"
-          src={login}
+          src={loginImage}
           alt="Mountains"
         />
       </div>
