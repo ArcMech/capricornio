@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { userSelectors, fetchUsersList } from 'src/store/users/usersSlice'
+import { userSelectors, fetchUsersList } from 'store/users/usersSlice'
 
 export const TableAll = () => {
   const dispatch = useDispatch()
@@ -10,8 +10,6 @@ export const TableAll = () => {
   useEffect(() => {
     dispatch(fetchUsersList())
   }, [])
-
-  console.log('users', users)
 
   const rows = users.map((user) => (
     <tr key={user.id}>

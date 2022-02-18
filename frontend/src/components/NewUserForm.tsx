@@ -1,7 +1,7 @@
 import { Formik } from 'formik'
 import { useDispatch } from 'react-redux'
 import { FormItem } from './forms'
-import { addUser } from 'src/store/users/usersSlice'
+import { addUser } from 'store/users/usersSlice'
 
 export const NewUserForm = () => {
   const dispatch = useDispatch()

@@ -1,4 +1,4 @@
-import { Layout } from 'src/layout'
+import { Layout } from 'layout'
 
 export const Profile = () => {
   return (

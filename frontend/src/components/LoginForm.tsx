@@ -2,8 +2,8 @@ import { Formik } from 'formik'
 import { useNavigate, Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { FormItem } from './forms'
-import { login } from 'src/store/users/usersSlice'
-import loginImage from 'src/images/login.jpg'
+import { login } from 'store/users/usersSlice'
+import loginImage from 'images/login.jpg'
 
 export const LoginForm = () => {
   const navigate = useNavigate()

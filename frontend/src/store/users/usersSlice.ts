@@ -3,8 +3,8 @@ import {
   createEntityAdapter,
   createSlice,
 } from '@reduxjs/toolkit'
-import { api } from 'src/api'
-import { User } from 'src/types'
+import { api } from 'api'
+import { User } from 'types'
 import { RootState } from '..'
 
 export const login = createAsyncThunk(

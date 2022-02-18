@@ -1,4 +1,4 @@
-import { Navbar } from 'src/components'
+import { Navbar } from 'components'
 
 export const Layout: React.FC = ({ children }) => {
   return (
