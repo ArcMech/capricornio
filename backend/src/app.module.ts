@@ -5,12 +5,14 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { APP_GUARD } from '@nestjs/core'
 import { RolesGuard } from './roles/roles.guard'
 import { ConfigModule } from '@nestjs/config'
+import { ProjectsModule } from './api/projects/projects.module'
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     UserModule,
     AuthModule,
+    ProjectsModule,
     TypeOrmModule.forRoot({
       type: 'postgres', // type of our database
       host: process.env.DATABASE_HOST, // database host
@@ -28,5 +30,6 @@ import { ConfigModule } from '@nestjs/config'
       useClass: RolesGuard,
     },
   ],
+  controllers: [],
 })
 export class AppModule {}

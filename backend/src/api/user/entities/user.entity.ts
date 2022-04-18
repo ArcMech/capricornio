@@ -1,4 +1,12 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Project } from 'src/api/projects/entities/project.entity'
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm'
 
 @Entity()
 export class User {
@@ -27,4 +35,10 @@ export class User {
   emailToLowerCase() {
     this.email = this.email.toLowerCase()
   }
+
+  @JoinTable()
+  @ManyToMany((type) => Project, (user) => user.assigned_users, {
+    cascade: true,
+  })
+  projects: Project[]
 }
