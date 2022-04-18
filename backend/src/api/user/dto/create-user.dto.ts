@@ -1,4 +1,10 @@
-import { IsString, IsEmail, MinLength, IsNumber } from 'class-validator'
+import {
+  IsString,
+  IsOptional,
+  IsEmail,
+  MinLength,
+  IsNumber,
+} from 'class-validator'
 
 export class CreateUserDto {
   @IsString()
@@ -17,6 +23,7 @@ export class CreateUserDto {
   @IsString({ each: true })
   readonly role: 'admin' | 'manager' | 'team' | 'customer'
 
+  @IsOptional()
   @IsNumber({}, { each: true })
-  projects?: number[]
+  readonly projects: number[]
 }

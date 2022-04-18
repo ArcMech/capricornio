@@ -5,7 +5,7 @@ import { ProjectsService } from './projects.service'
 import { Project } from './entities/project.entity'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Project])], // 👈 Adding Coffee Entity here to TypeOrmModule.forFeature
+  imports: [TypeOrmModule.forFeature([Project])],
   controllers: [ProjectsController],
   providers: [ProjectsService],
 })

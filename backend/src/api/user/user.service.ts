@@ -66,7 +66,6 @@ export class UserService {
     const user = this.userRepository.create({
       ...createUserDto,
       password,
-      name: `${createUserDto.first_name} ${createUserDto.last_name}`,
       projects,
     })
 
@@ -80,10 +79,10 @@ export class UserService {
       (await Promise.all(
         updateUserDto.projects.map((id) => this.preloadProjects(id)),
       ))
+
     const user = await this.userRepository.preload({
       id: +id,
       ...updateUserDto,
-      name: `${updateUserDto.first_name} ${updateUserDto.last_name}`,
       projects,
     })
     if (!user) {
