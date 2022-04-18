@@ -12,9 +12,9 @@ function App() {
         <Route
           path="/dashboard"
           element={
-            // <AuthRoute>
-            <Dashboard />
-            // </AuthRoute>
+            <AuthRoute>
+              <Dashboard />
+            </AuthRoute>
           }
         />
         <Route

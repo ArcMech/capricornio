@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { FormItem } from './forms'
 import { login } from 'store/users/usersSlice'
 import loginImage from 'images/login.jpg'
+import logo from 'assets/logo.svg'
 
 export const LoginForm = () => {
   const navigate = useNavigate()
@@ -19,22 +20,19 @@ export const LoginForm = () => {
   return (
     <div className="flex flex-wrap w-full">
       <div className="flex flex-col w-full md:w-1/2">
-        <div className="flex justify-center pt-12 md:justify-center md:-mb-24 ">
-          <Link
-            to="/"
-            className="p-4 text-xl font-bold text-white bg-blue-400 rounded-md"
-          >
-            Capricornio
+        <div className="flex justify-center pt-24 md:justify-center md:-mb-24 md:align-bottom">
+          <Link to="/" className="m-4">
+            <img className="w-40 h-40" src={logo} alt="Capricornio logo" />
           </Link>
         </div>
-        <div className="flex flex-col justify-center px-8 pt-8 my-auto md:justify-start md:pt-0 md:px-24 lg:px-32">
+        <div className="flex flex-col justify-center px-8 pt-2 my-auto md:justify-start md:pt-0 md:px-24 lg:px-32">
           <Formik
             initialValues={{ email: '', password: '' }}
             onSubmit={onSubmit}
           >
             {({ handleSubmit }) => (
               <form
-                className="flex flex-col pt-3 md:pt-8 gap-y-3"
+                className="flex flex-col pt-3 md:pt-2 gap-y-3"
                 onSubmit={handleSubmit}
               >
                 <FormItem label="Email" name="email" />
