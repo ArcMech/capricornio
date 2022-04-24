@@ -11,13 +11,18 @@ export const Projects = () => {
 
   useEffect(() => {
     dispatch(fetchProjectsList())
-  }, [])
+  }, [dispatch])
 
   return (
     <Layout>
       <div className="grid overflow-hidden grid-cols-3 grid-rows-2 gap-2">
-        {projects.map(({ name, id }) => (
-          <Card key={id} name={name} description="-" href={`/projects/${id}`} />
+        {projects.map(({ description, id, name }) => (
+          <Card
+            key={id}
+            name={name}
+            description={description}
+            href={`/projects/${id}`}
+          />
         ))}
       </div>
     </Layout>

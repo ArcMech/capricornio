@@ -18,6 +18,9 @@ export class Project {
   @Column({ length: 32 })
   name: string
 
+  @Column({ length: 360 })
+  description: string
+
   @ManyToMany((type) => User, (user) => user.projects)
   assigned_users: User[]
 }

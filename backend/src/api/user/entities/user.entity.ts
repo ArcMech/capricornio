@@ -14,9 +14,6 @@ export class User {
   id: number
 
   @Column()
-  name: string
-
-  @Column()
   first_name: string
 
   @Column()

@@ -1,5 +1,5 @@
 import { Fragment, useState } from 'react'
-import { useNavigate, useLocation, Link } from 'react-router-dom'
+import { useLocation, Link } from 'react-router-dom'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import logo from 'assets/logo.svg'
@@ -29,10 +29,8 @@ export const Navbar = () => {
   const { pathname } = useLocation()
 
   const openSider = () => setVisible(true)
-  const navigate = useNavigate()
   const logout = () => {
     localStorage.clear()
-    navigate('/login')
   }
 
   const userNavigation = [
