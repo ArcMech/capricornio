@@ -2,6 +2,7 @@ import { Fragment, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import logo from 'assets/logo.svg'
 import { SlideOver } from '..'
 
 const user = {
@@ -38,7 +39,7 @@ export const Navbar = () => {
     { name: 'Sign out', to: '/login', onclick: logout },
   ]
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure as="nav" className="bg-slate-900">
       {({ open }) => (
         <>
           <SlideOver open={visible} setOpen={setVisible} />
@@ -46,11 +47,7 @@ export const Navbar = () => {
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <img
-                    className="h-8 w-8"
-                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-                    alt="Workflow"
-                  />
+                  <img className="h-8 w-8" src={logo} alt="Workflow" />
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
@@ -76,7 +73,7 @@ export const Navbar = () => {
                 <div className="ml-4 flex items-center md:ml-6">
                   <button
                     type="button"
-                    className="bg-pink-700 hover:bg-pink-500 text-white px-3 py-2 rounded-md text-sm font-medium mr-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                    className="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-md text-sm font-medium mr-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                     onClick={openSider}
                   >
                     Add new account

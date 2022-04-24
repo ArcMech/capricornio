@@ -39,7 +39,7 @@ export const LoginForm = () => {
                 <FormItem label="Password" name="password" type="password" />
                 <button
                   type="submit"
-                  className="w-full px-4 py-2 text-base font-semibold text-center text-white transition duration-200 ease-in bg-blue-400 shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 rounded-md"
+                  className="w-full px-4 py-2 text-base font-semibold text-center text-white transition duration-200 ease-in bg-sky-400 shadow-md hover:bg-sky-600 focus:outline-none focus:ring-2 rounded-md"
                 >
                   <span className="w-full">Submit</span>
                 </button>

@@ -69,7 +69,7 @@ export class UserService {
       projects,
     })
 
-    this.userRepository.save(user)
+    await this.userRepository.save(user)
     return user
   }
 
@@ -79,7 +79,6 @@ export class UserService {
       (await Promise.all(
         updateUserDto.projects.map((id) => this.preloadProjects(id)),
       ))
-
     const user = await this.userRepository.preload({
       id: +id,
       ...updateUserDto,

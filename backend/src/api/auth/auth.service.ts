@@ -12,9 +12,10 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async validateUser(username: string, password: string): Promise<any> {
-    const user = await this.userService.findOneByEmail(username)
-    const isAuthorized = bcrypt.compare(password, user.password)
+  async validateUser(email: string, password: string): Promise<any> {
+    const user = await this.userService.findOneByEmail(email)
+
+    const isAuthorized = await bcrypt.compare(password, user.password)
     if (isAuthorized) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user
@@ -25,7 +26,7 @@ export class AuthService {
 
   async login(request: Pick<User, 'email' | 'password'>) {
     const user = await this.userService.findOneByEmail(request.email)
-    const isAuthorized = bcrypt.compare(request.password, user.password)
+    const isAuthorized = await bcrypt.compare(request.password, user.password)
 
     if (isAuthorized) {
       const { password, ...result } = user
