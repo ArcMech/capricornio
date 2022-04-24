@@ -1,5 +1,16 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Home, Login, Dashboard, Profile, Register } from './pages'
+import {
+  Calendar,
+  Home,
+  Login,
+  Dashboard,
+  Profile,
+  Projects,
+  ProjectDetails,
+  Register,
+  Reports,
+  Team,
+} from './pages'
 import { AuthRoute } from './routes'
 
 function App() {
@@ -22,6 +33,46 @@ function App() {
           element={
             <AuthRoute>
               <Profile />
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="/projects"
+          element={
+            <AuthRoute>
+              <Projects />
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="/team"
+          element={
+            <AuthRoute>
+              <Team />
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="/calendar"
+          element={
+            <AuthRoute>
+              <Calendar />
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="/reports"
+          element={
+            <AuthRoute>
+              <Reports />
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="/projects/:projectId"
+          element={
+            <AuthRoute>
+              <ProjectDetails />
             </AuthRoute>
           }
         />

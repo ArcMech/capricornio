@@ -1,5 +1,5 @@
 import { Fragment, useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import logo from 'assets/logo.svg'
@@ -12,11 +12,11 @@ const user = {
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
 const navigation = [
-  { name: 'Dashboard', href: '/dashboard', current: true },
-  { name: 'Team', href: '#', current: false },
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Calendar', href: '#', current: false },
-  { name: 'Reports', href: '#', current: false },
+  { name: 'Dashboard', href: '/dashboard' },
+  { name: 'Team', href: '/team' },
+  { name: 'Projects', href: '/projects' },
+  { name: 'Calendar', href: '/calendar' },
+  { name: 'Reports', href: '/reports' },
 ]
 
 function classNames(...classes: string[]) {
@@ -25,6 +25,8 @@ function classNames(...classes: string[]) {
 
 export const Navbar = () => {
   const [visible, setVisible] = useState(false)
+
+  const { pathname } = useLocation()
 
   const openSider = () => setVisible(true)
   const navigate = useNavigate()
@@ -35,7 +37,7 @@ export const Navbar = () => {
 
   const userNavigation = [
     { name: 'Your Profile', to: '/profile' },
-    { name: 'Settings', to: '#' },
+    { name: 'Settings', to: '/settings' },
     { name: 'Sign out', to: '/login', onclick: logout },
   ]
   return (
@@ -52,19 +54,21 @@ export const Navbar = () => {
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
-                        href={item.href}
+                        to={item.href}
                         className={classNames(
-                          item.current
+                          item.href === pathname
                             ? 'bg-gray-900 text-white'
                             : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                           'px-3 py-2 rounded-md text-sm font-medium',
                         )}
-                        aria-current={item.current ? 'page' : undefined}
+                        aria-current={
+                          item.href === pathname ? 'page' : undefined
+                        }
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -147,12 +151,12 @@ export const Navbar = () => {
                   as="a"
                   href={item.href}
                   className={classNames(
-                    item.current
+                    item.href === pathname
                       ? 'bg-gray-900 text-white'
                       : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                     'block px-3 py-2 rounded-md text-base font-medium',
                   )}
-                  aria-current={item.current ? 'page' : undefined}
+                  aria-current={item.href === pathname ? 'page' : undefined}
                 >
                   {item.name}
                 </Disclosure.Button>
