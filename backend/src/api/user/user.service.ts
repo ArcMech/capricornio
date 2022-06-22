@@ -7,6 +7,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm'
 import * as bcrypt from 'bcrypt'
 import { Repository } from 'typeorm'
+import { FilesService } from '../files/files.service'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { User } from './entities/user.entity'
@@ -17,6 +18,7 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    private readonly filesService: FilesService,
     @InjectRepository(Project)
     private readonly projectRepository: Repository<Project>,
   ) {}
@@ -101,5 +103,27 @@ export class UserService {
     }
 
     throw new HttpException(`Not found #${id} project`, HttpStatus.NOT_FOUND)
+  }
+
+  async addAvatar(userId: number, imageBuffer: Buffer, filename: string) {
+    const avatar = await this.filesService.uploadAvatar(imageBuffer, filename)
+    const user = await this.findOne(userId)
+    const saveUser = {
+      ...user,
+      avatar,
+    }
+    return this.userRepository.save(saveUser)
+  }
+
+  async deleteAvatar(userId: number) {
+    const user = await this.findOne(userId)
+    const fileId = user.avatar?.id
+    if (fileId) {
+      await this.userRepository.update(userId, {
+        ...user,
+        avatar: null,
+      })
+      await this.filesService.deleteAvatar(fileId)
+    }
   }
 }

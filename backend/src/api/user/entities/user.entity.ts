@@ -1,10 +1,13 @@
 import { Project } from 'src/api/projects/entities/project.entity'
+import { Avatar } from 'src/api/files/entities/avatar.entity'
 import {
   BeforeInsert,
   Column,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm'
 
@@ -38,4 +41,11 @@ export class User {
     cascade: true,
   })
   projects: Project[]
+
+  @JoinColumn()
+  @OneToOne(() => Avatar, {
+    eager: true,
+    nullable: true,
+  })
+  public avatar?: Avatar | null
 }

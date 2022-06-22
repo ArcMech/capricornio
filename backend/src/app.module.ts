@@ -9,7 +9,7 @@ import { ProjectsModule } from './api/projects/projects.module'
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true }),
     UserModule,
     AuthModule,
     ProjectsModule,

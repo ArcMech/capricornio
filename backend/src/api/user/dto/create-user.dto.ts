@@ -4,7 +4,9 @@ import {
   IsEmail,
   MinLength,
   IsNumber,
+  IsJSON,
 } from 'class-validator'
+import { Avatar } from 'src/api/files/entities/avatar.entity'
 
 export class CreateUserDto {
   @IsString()
@@ -26,4 +28,8 @@ export class CreateUserDto {
   @IsOptional()
   @IsNumber({}, { each: true })
   readonly projects: number[]
+
+  @IsOptional()
+  @IsJSON()
+  readonly avatar: Avatar | null
 }
