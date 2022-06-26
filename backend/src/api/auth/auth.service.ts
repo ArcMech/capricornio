@@ -1,4 +1,4 @@
-import { Body, Injectable, Req } from '@nestjs/common'
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common'
 import { UserService } from '../user/user.service'
 import { JwtService } from '@nestjs/jwt'
 import { User } from '../user/entities/user.entity'
@@ -33,6 +33,12 @@ export class AuthService {
       const payload = { email: user.email, id: user.id }
       return { ...result, access_token: this.jwtService.sign(payload) }
     }
-    throw Error('Wrong password')
+    throw new HttpException(
+      {
+        status: HttpStatus.FORBIDDEN,
+        error: 'Wrong username or password. Try once more.',
+      },
+      HttpStatus.FORBIDDEN,
+    )
   }
 }

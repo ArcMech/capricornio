@@ -1,68 +1,69 @@
 import { Formik } from 'formik'
-import { useNavigate, Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { FormItem } from './forms'
+import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { userStatusSelector } from 'store/users'
 import { login } from 'store/users/usersSlice'
+import { Alert } from './alert'
+import { FormItem } from './forms'
+
 import loginImage from 'images/login.jpg'
 import logo from 'assets/logo.svg'
 
 export const LoginForm = () => {
-  const navigate = useNavigate()
   const dispatch = useDispatch()
-  const onSubmit = async (values: { password: string; email: string }) => {
-    try {
-      dispatch(login(values))
-      navigate('/dashboard')
-    } catch (e: any) {
-      console.error(e)
-    }
+  const { error } = useSelector(userStatusSelector)
+  const onSubmit = (values: { password: string; email: string }) => {
+    dispatch(login(values))
   }
   return (
-    <div className="flex flex-wrap w-full">
-      <div className="flex flex-col w-full md:w-1/2">
-        <div className="flex justify-center pt-24 md:justify-center md:-mb-24 md:align-bottom">
-          <Link to="/" className="m-4">
-            <img className="w-40 h-40" src={logo} alt="Capricornio logo" />
-          </Link>
-        </div>
-        <div className="flex flex-col justify-center px-8 pt-2 my-auto md:justify-start md:pt-0 md:px-24 lg:px-32">
-          <Formik
-            initialValues={{ email: '', password: '' }}
-            onSubmit={onSubmit}
-          >
-            {({ handleSubmit }) => (
-              <form
-                className="flex flex-col pt-3 md:pt-2 gap-y-3"
-                onSubmit={handleSubmit}
-              >
-                <FormItem label="Email" name="email" />
-                <FormItem label="Password" name="password" type="password" />
-                <button
-                  type="submit"
-                  className="w-full px-4 py-2 text-base font-semibold text-center text-white transition duration-200 ease-in bg-sky-400 shadow-md hover:bg-sky-600 focus:outline-none focus:ring-2 rounded-md"
+    <>
+      <Alert type="Error" message={error} />
+      <div className="flex flex-wrap w-full">
+        <div className="flex flex-col w-full md:w-1/2">
+          <div className="flex justify-center pt-24 md:justify-center md:-mb-24 md:align-bottom">
+            <Link to="/" className="m-4">
+              <img className="w-40 h-40" src={logo} alt="Capricornio logo" />
+            </Link>
+          </div>
+          <div className="flex flex-col justify-center px-8 pt-2 my-auto md:justify-start md:pt-0 md:px-24 lg:px-32">
+            <Formik
+              initialValues={{ email: '', password: '' }}
+              onSubmit={onSubmit}
+            >
+              {({ handleSubmit }) => (
+                <form
+                  className="flex flex-col pt-3 md:pt-2 gap-y-3"
+                  onSubmit={handleSubmit}
                 >
-                  <span className="w-full">Submit</span>
-                </button>
-              </form>
-            )}
-          </Formik>
-          <div className="pt-12 pb-12 text-center">
-            <p>
-              {"Don't have an account? "}
-              <Link to="/register" className="font-semibold underline">
-                Register here.
-              </Link>
-            </p>
+                  <FormItem label="Email" name="email" />
+                  <FormItem label="Password" name="password" type="password" />
+                  <button
+                    type="submit"
+                    className="w-full px-4 py-2 text-base font-semibold text-center text-white transition duration-200 ease-in bg-sky-400 shadow-md hover:bg-sky-600 focus:outline-none focus:ring-2 rounded-md"
+                  >
+                    <span className="w-full">Submit</span>
+                  </button>
+                </form>
+              )}
+            </Formik>
+            <div className="pt-12 pb-12 text-center">
+              <p>
+                {"Don't have an account? "}
+                <Link to="/register" className="font-semibold underline">
+                  Register here.
+                </Link>
+              </p>
+            </div>
           </div>
         </div>
+        <div className="w-1/2 shadow-2xl">
+          <img
+            className="hidden object-cover w-full h-screen md:block"
+            src={loginImage}
+            alt="Mountains"
+          />
+        </div>
       </div>
-      <div className="w-1/2 shadow-2xl">
-        <img
-          className="hidden object-cover w-full h-screen md:block"
-          src={loginImage}
-          alt="Mountains"
-        />
-      </div>
-    </div>
+    </>
   )
 }

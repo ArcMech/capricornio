@@ -8,4 +8,5 @@ export type User = {
   email: string
   role: Roles
   access_token: string
+  avatar: { id: number; url: string; key: string } | null
 }

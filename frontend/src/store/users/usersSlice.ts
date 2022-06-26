@@ -1,17 +1,31 @@
 import {
   createAsyncThunk,
   createEntityAdapter,
+  createSelector,
   createSlice,
 } from '@reduxjs/toolkit'
 import { api } from 'api'
-import { User } from 'types'
+import { ErrorType, User } from 'types'
 import { RootState } from '..'
 
-export const login = createAsyncThunk(
+type LoginPayload = {
+  email: string
+  password: string
+}
+
+export const login = createAsyncThunk<User, LoginPayload>(
   'users/auth',
-  async (data: { email: string; password: string }) => {
-    const response = await api({ url: 'auth/', method: 'post', data })
-    return response.data
+  async ({ email, password }, { rejectWithValue }) => {
+    try {
+      const response = await api({
+        url: 'auth/',
+        method: 'post',
+        data: { email, password },
+      })
+      return response.data
+    } catch (e: any) {
+      return rejectWithValue(e.response.data as ErrorType)
+    }
   },
 )
 
@@ -32,14 +46,24 @@ type InitialState = {
   user: User | null
 }
 
+const initialUser =
+  localStorage.getItem('user') !== null
+    ? JSON.parse(localStorage.getItem('user') as string)
+    : null
+
 const usersSlice = createSlice({
   name: 'users',
   initialState: usersAdapter.getInitialState<InitialState>({
     loading: false,
     error: '',
-    user: null,
+    user: initialUser,
   }),
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      localStorage.clear()
+      state.user = null
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUsersList.fulfilled, (state, action) => {
@@ -62,7 +86,19 @@ const usersSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.user = action.payload
+        state.loading = false
+        state.error = null
         localStorage.setItem('token', action.payload.access_token)
+        localStorage.setItem('user', JSON.stringify(action.payload))
+      })
+      .addCase(login.pending, (state) => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(login.rejected, (state, action) => {
+        const { error } = action.payload as ErrorType
+        state.error = error
+        state.loading = false
       })
   },
 })
@@ -70,5 +106,17 @@ const usersSlice = createSlice({
 export const userSelectors = usersAdapter.getSelectors<RootState>(
   (state) => state.users,
 )
+
+export const userSelector = createSelector(
+  (state: RootState) => state.users.user,
+  (user) => user,
+)
+
+export const userStatusSelector = createSelector(
+  (state: RootState) => state.users,
+  ({ error, loading }) => ({ error, loading }),
+)
+
+export const { logout } = usersSlice.actions
 
 export default usersSlice.reducer

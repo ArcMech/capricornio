@@ -1,16 +1,13 @@
 import { Fragment, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useLocation, Link } from 'react-router-dom'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { logout } from 'store/users'
+import { useUser } from 'hooks'
 import logo from 'assets/logo.svg'
 import { SlideOver } from '..'
 
-const user = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-}
 const navigation = [
   { name: 'Dashboard', href: '/dashboard' },
   { name: 'Team', href: '/team' },
@@ -26,17 +23,22 @@ function classNames(...classes: string[]) {
 export const Navbar = () => {
   const [visible, setVisible] = useState(false)
 
+  const dispatch = useDispatch()
+
   const { pathname } = useLocation()
 
+  const user = useUser()
+
   const openSider = () => setVisible(true)
-  const logout = () => {
-    localStorage.clear()
+
+  const logoutFc = () => {
+    dispatch(logout())
   }
 
   const userNavigation = [
     { name: 'Your Profile', to: '/profile' },
     { name: 'Settings', to: '/settings' },
-    { name: 'Sign out', to: '/login', onclick: logout },
+    { name: 'Sign out', to: '/login', onClick: logoutFc },
   ]
   return (
     <Disclosure as="nav" className="bg-slate-900">
@@ -93,7 +95,7 @@ export const Navbar = () => {
                         <span className="sr-only">Open user menu</span>
                         <img
                           className="h-8 w-8 rounded-full"
-                          src={user.imageUrl}
+                          src={user?.avatar?.url || ''}
                           alt=""
                         />
                       </Menu.Button>
@@ -109,7 +111,7 @@ export const Navbar = () => {
                     >
                       <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                         {userNavigation.map((item) => (
-                          <Menu.Item key={item.name}>
+                          <Menu.Item key={item.name} onClick={item?.onClick}>
                             {({ active }) => (
                               <Link
                                 to={item.to}
@@ -165,16 +167,16 @@ export const Navbar = () => {
                 <div className="flex-shrink-0">
                   <img
                     className="h-10 w-10 rounded-full"
-                    src={user.imageUrl}
+                    src={user?.avatar?.url}
                     alt=""
                   />
                 </div>
                 <div className="ml-3">
                   <div className="text-base font-medium leading-none text-white">
-                    {user.name}
+                    {user?.first_name} {user?.last_name}
                   </div>
                   <div className="text-sm font-medium leading-none text-gray-400">
-                    {user.email}
+                    {user?.email}
                   </div>
                 </div>
                 <button
