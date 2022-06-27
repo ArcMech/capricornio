@@ -1,8 +1,9 @@
-import { Navbar } from 'components'
+import { Command, Navbar } from 'components'
 
 export const Layout: React.FC = ({ children }) => {
   return (
     <>
+      <Command />
       <div className="min-h-full">
         <Navbar />
         <main>

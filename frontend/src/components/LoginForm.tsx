@@ -35,7 +35,7 @@ export const LoginForm = () => {
                   className="flex flex-col pt-3 md:pt-2 gap-y-3"
                   onSubmit={handleSubmit}
                 >
-                  <FormItem label="Email" name="email" />
+                  <FormItem label="Email" name="email" type="email" />
                   <FormItem label="Password" name="password" type="password" />
                   <button
                     type="submit"
