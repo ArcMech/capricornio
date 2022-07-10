@@ -1,12 +1,24 @@
 @tailwind base;
+
+@layer base {
+  html {
+    font-family: Raleway, system-ui, sans-serif;
+  }
+  h1 {
+    @apply text-3xl mb-2 text-sky-900 font-bold;
+  }
+  h2 {
+    @apply text-2xl mb-2 text-sky-900;
+  }
+  hr {
+    @apply border-sky-900/20 mb-2;
+  }
+}
 @tailwind components;
 @tailwind utilities;
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

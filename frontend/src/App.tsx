@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import {
-  Calendar,
   Home,
   Login,
   Dashboard,
@@ -8,8 +7,7 @@ import {
   Projects,
   ProjectDetails,
   Register,
-  Reports,
-  Team,
+  Users,
 } from './pages'
 import { AuthRoute } from './routes'
 
@@ -22,6 +20,30 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route
           path="/dashboard"
+          element={
+            <AuthRoute>
+              <Dashboard />
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="/sell"
+          element={
+            <AuthRoute>
+              <Dashboard />
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="/analysis"
+          element={
+            <AuthRoute>
+              <Dashboard />
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="/support"
           element={
             <AuthRoute>
               <Dashboard />
@@ -45,26 +67,10 @@ function App() {
           }
         />
         <Route
-          path="/team"
+          path="/users"
           element={
             <AuthRoute>
-              <Team />
-            </AuthRoute>
-          }
-        />
-        <Route
-          path="/calendar"
-          element={
-            <AuthRoute>
-              <Calendar />
-            </AuthRoute>
-          }
-        />
-        <Route
-          path="/reports"
-          element={
-            <AuthRoute>
-              <Reports />
+              <Users />
             </AuthRoute>
           }
         />

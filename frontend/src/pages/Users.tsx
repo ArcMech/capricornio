@@ -1,7 +1,7 @@
 import { Layout } from 'layout'
 import { TableAll } from 'components'
 
-export const Team = () => {
+export const Users = () => {
   return (
     <Layout>
       <TableAll />

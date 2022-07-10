@@ -1,16 +1,25 @@
-import { Command, Navbar } from 'components'
+import { Command, Navbar, SideNavigation } from 'components'
 
-export const Layout: React.FC = ({ children }) => {
+export const Layout: React.FC<{ title?: string }> = ({ children, title }) => {
   return (
     <>
       <Command />
-      <div className="min-h-full">
+      <div className="min-h-[200vh] bg-blue-100 relative">
         <Navbar />
-        <main>
-          <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-            <div className="px-4 py-6 sm:px-0">{children}</div>
+        <div className="flex">
+          <div className="flex-none w-64">
+            <SideNavigation />
           </div>
-        </main>
+          <main className="inset-y-4 relative min-h-[80vh] px-8 flex-auto">
+            <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+              <div className="">
+                <h1>{title}</h1>
+                <hr />
+                {children}
+              </div>
+            </div>
+          </main>
+        </div>
       </div>
     </>
   )

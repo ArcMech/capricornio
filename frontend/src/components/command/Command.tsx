@@ -26,7 +26,7 @@ export const Command = () => {
     <Transition.Root show={open} as={Fragment}>
       <Dialog
         onClose={onClose}
-        className="fixed inset-0 p-4 pt-[25vh] overflow-y-auto"
+        className="fixed inset-0 p-4 pt-[25vh] overflow-y-auto z-50"
       >
         <Transition.Child
           enter="duration-300 ease-out"
